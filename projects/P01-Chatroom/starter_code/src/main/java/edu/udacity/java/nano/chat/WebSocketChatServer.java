@@ -33,6 +33,7 @@ public class WebSocketChatServer {
     @OnOpen
     public void onOpen(Session session) {
         //TODO: add on open connection.
+        System.out.println("gfgsg");
     }
 
     /**
@@ -41,6 +42,7 @@ public class WebSocketChatServer {
     @OnMessage
     public void onMessage(Session session, String jsonStr) {
         //TODO: add send message.
+        System.out.println("gfgsg");
     }
 
     /**
