@@ -14,7 +14,7 @@
         <span class="mdui-typo-title">Chat Room</span>
         <div class="mdui-toolbar-spacer"></div>
         <a class="mdui-btn mdui-btn-icon" th:href="@{/}">
-            <i class="mdui-icon material-icons">exit_to_app</i>
+            <i class="mdui-icon material-icons exit">exit_to_app</i>
         </a>
     </div>
 </div>
@@ -36,7 +36,9 @@
                         <input class="mdui-textfield-input" id="msg"/>
                     </div>
                     <div class="mdui-container" style="padding:20px 35px">
-                        <!-- TODO: add a send button to send message -->
+                        <button class="mdui-btn mdui-color-theme mdui-ripple send"
+                                onclick="sendMsgToServer()">Send
+                        </button>
                         <button class="mdui-btn mdui-color-theme mdui-ripple"
                                 onclick="clearMsg()">Clear
                         </button>
@@ -54,10 +56,11 @@
                 <div class="mdui-chip">
                     <span class="mdui-chip-icon mdui-color-blue">
                         <i class="mdui-icon material-icons">face</i></span>
-                    <span class="mdui-chip-title">Online Users</span>
-                    <!-- TODO: check online number num -->
+                    <span class="mdui-chip-title">Online Users
+                        <i class="chat-num" style="color:red;"></i></span>
                 </div>
-                <!-- TODO: add a message container -->
+                <div class="message-container">
+                </div>
             </div>
 
         </div>
@@ -65,7 +68,6 @@
 </div>
 
 <script th:inline="javascript">
-
     /**
      * WebSocket Client
      *
@@ -76,14 +78,13 @@
         /**
          * WebSocket client PS：URL shows WebSocket protocal, port number, and then end point.
          */
-        var webSocket = new WebSocket(/*[[${webSocketUrl}]]*/ 'ws://localhost:8080/chat');
+        var webSocket = new WebSocket('ws://localhost:8080/chat/' + /*[[${username}]]*/);
         /**
          * websocket open connection.
          */
         webSocket.onopen = function (event) {
             console.log('WebSocket open connection');
         };
-
         /**
          * Server send 1) broadcast message, 2) online users.
          */
@@ -107,14 +108,12 @@
                 });
             }
         };
-
         /**
          * Close connection
          */
         webSocket.onclose = function (event) {
             console.log('WebSocket close connection.');
         };
-
         /**
          * Exception
          */
@@ -123,10 +122,7 @@
         };
         return webSocket;
     }
-
     var webSocket = getWebSocket();
-
-
     /**
      * Send messages to server use webSocket.
      */
@@ -137,14 +133,12 @@
             $message.val(null);
         }
     }
-
     /**
      * Clear screen
      */
     function clearMsg() {
         $(".message-container").empty();
     }
-
     /**
      * Enter to send message.
      */
@@ -152,10 +146,7 @@
         var e = event || window.event || arguments.callee.caller.arguments[0];
         e.keyCode === 13 && sendMsgToServer();
     };
-
 </script>
 
 </body>
 </html>
-
-
