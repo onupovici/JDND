@@ -29,7 +29,7 @@ public class WebSocketChatServer {
 
         onlineSessions.forEach((username, session)-> {
             try{
-                onlineSessions.get(username).getBasicRemote().sendText(msg);
+                session.getBasicRemote().sendText(msg);
             }
             catch(Exception e){
                 e.printStackTrace();
